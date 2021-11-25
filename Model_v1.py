@@ -27,7 +27,7 @@ log = True
 
 # Create log file
 if log:
-    filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
 
     f = open(filename, "a")
     f.write(parameters)
