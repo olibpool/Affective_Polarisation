@@ -6,7 +6,7 @@ import datetime
 # Set properties of model:
 
 N = 1000  # Population size
-g = 4  # Number of groups # TODO vary this and make graph
+g = 5  # Number of groups # TODO vary this and make graph
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability -defualt = 0.6
 Bi = 1  # In-group benefit - default = 1
