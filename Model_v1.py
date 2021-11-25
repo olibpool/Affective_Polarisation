@@ -5,15 +5,15 @@ import datetime
 
 # Set properties of model:
 
-N = 100  # Population size
-g = 4  # Number of groups
+N = 1000  # Population size
+g = 4  # Number of groups # TODO vary this and make graph
 qi = 1  # In-group success probability - default = 1
-qo = 0.6  # Out-group success probability 0.6
+qo = 0.6  # Out-group success probability -defualt = 0.6
 Bi = 1  # In-group benefit - default = 1
-Bo = 2  # Out-group Benefit
-sigma = 1 / N  # To keep N*sigma ~  1
+Bo = 2  # Out-group Benefit - default = 2
+sigma = 1 / N  # To keep N*sigma ~  1 default 1/N
 p = 1  # Polarisation
-trials = 1000  # Number of trials
+trials = 10000  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
 
 parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups, g: {g} \nIn-group success " \
              f"probability, qi: {qi} \nOut-group success probability, qo: {qo} \nIn-group benefit, " \
@@ -23,7 +23,7 @@ parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups,
 print(parameters)
 
 # Save to log? True = Save
-log = False
+log = True
 filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
 
 # Create log file
@@ -62,8 +62,9 @@ def prob_function(w_i, w_j):
 
 # Calculates pobar
 def pbar(group, neigh):
-    outgroup_neigh_pol = [population[n] for n in neigh if int(n*g/N) != group]
+    outgroup_neigh_pol = [population[n] for n in neigh if int(n * g / N) != group]
     return np.mean(outgroup_neigh_pol)
+
 
 results = []
 
@@ -129,3 +130,7 @@ if log:
         f.write(f"\n The average p-val was: {avg} \n\n The results were: \n")
         f.write(str(results))
         f.close()
+
+# TODO make graph vary strengh of selection vs fixation
+# TODO find a network and plug in adjacency matrix & compare to baseline
+# TODO think about varying parameters
