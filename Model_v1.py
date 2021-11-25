@@ -23,12 +23,11 @@ parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups,
 print(parameters)
 
 # Save to log? True = Save
-log = True
+log = False
+filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
 
 # Create log file
 if log:
-    filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
-
     f = open(filename, "a")
     f.write(parameters)
     f.write("\n")
@@ -36,20 +35,8 @@ if log:
     f.close()
 
 # Initial population saved as a dictionary with value 1 suggesting polarised.
-# member index: [polarisation (pi), group number]
-start_population = {i: [p, 0] for i in range(N)}
-
-g_num = -1
-# Assigning the group numbers - note this breaks for small N
-for j in range(0, N, int(N / g)):
-    g_num += 1
-
-    if j + int(N / g) < N:
-        for k in range(j, j + int(N / g)):
-            start_population[k][1] = g_num
-    else:
-        for k in range(j, N):
-            start_population[k][1] = g_num
+# member index: [polarisation (pi)]
+start_population = np.array([1 for i in range(N)])
 
 # Adjacency matrix
 # Configured to just create a simple connected graph for now. Also array is used for effciency purposes.
@@ -64,14 +51,7 @@ def wi_func(pi, pobar):
 # Finding neighbours
 def neighbours(i):
     pos_neighbours = adj[i]
-    neigh = []
-    index = 0
-
-    for n in pos_neighbours:
-        if n != 0:
-            neigh.append(index)
-        index += 1
-
+    neigh = np.where(pos_neighbours == 1)[0]
     return neigh
 
 
@@ -82,61 +62,53 @@ def prob_function(w_i, w_j):
 
 # Calculates pobar
 def pbar(group, neigh):
-    total = 0
-    count = 0
+    outgroup_neigh_pol = [population[n] for n in neigh if int(n*g/N) != group]
+    return np.mean(outgroup_neigh_pol)
 
-    for n in neigh:
-        if population[n][1] != group:
-            total += population[n][0]
-            count += 1
+results = []
 
-    return total / count
-
-
-pol_flips = 0  # Number of times that the population finishes with 0 polarisation
-
-for tests in range(100000):
-    results = []
+for tests in range(10):
+    pol_flips = 0  # Number of times that the population finishes with 0 polarisation
 
     for counter in range(trials):
         # Choose a random member of the population and flip their polarisation
         initial = random.randrange(N)
         population = copy.deepcopy(start_population)
-        population[initial][0] = 0
+        population[initial] = 0
 
         for _ in range(200 * N):
             # Select i and calculate properties
             i = random.randrange(N)
-            i_pol = population[i][0]
+            i_pol = population[i]
             i_neighbours = neighbours(i)
 
             # Select j and calculate properties
             j = random.choice(i_neighbours)
-            j_pol = population[j][0]
+            j_pol = population[j]
 
             # Only continue if the polarisations are different
             if i_pol != j_pol:
 
-                i_group = population[i][1]
+                i_group = int(i * g / N)
                 i_pobar = pbar(i_group, i_neighbours)
 
                 j_neighbours = neighbours(j)
-                j_group = population[j][1]
+                j_group = int(j * g / N)
                 j_pobar = pbar(j_group, j_neighbours)
 
                 # Expected fitness for i and j
-                wi = wi_func(population[i][0], i_pobar)
-                wj = wi_func(population[j][0], j_pobar)
+                wi = wi_func(population[i], i_pobar)
+                wj = wi_func(population[j], j_pobar)
 
                 # Probability that i will copy j strategy
                 prob = prob_function(wi, wj)
 
                 if random.random() < prob:
-                    population[i][0] = population[j][0]
+                    population[i] = population[j]
 
                 # Check whether the absorbing state of zero polarisation or maximal polarisation has been reached
-                first = population[0][0]
-                if first in [0, 1] and all(flag == first for [flag, _] in population.values()):
+                first = population[0]
+                if first in [0, 1] and all(flag == first for flag in population):
                     if first == 0:
                         pol_flips += 1
                     break
@@ -153,6 +125,7 @@ for tests in range(100000):
 avg = sum(results) / len(results)
 
 if log:
-    f.write(f"\n The average p-val was: {avg} \n\n The results were: \n")
-    f.write(str(results))
-    f.close()
+    with open(filename, "a") as f:
+        f.write(f"\n The average p-val was: {avg} \n\n The results were: \n")
+        f.write(str(results))
+        f.close()
