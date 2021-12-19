@@ -3,17 +3,17 @@ import numpy as np
 import random
 import datetime
 
-# Set properties of model:
+# Set properties of model O(N**6) (with a connected graph):
 
-N = 1000  # Population size
+N = 100  # Population size
 g = 5  # Number of groups # TODO vary this and make graph
 qi = 1  # In-group success probability - default = 1
-qo = 0.6  # Out-group success probability -defualt = 0.6
+qo = 0.6  # Out-group success probability -default = 0.6
 Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
-sigma = 1 / N  # To keep N*sigma ~  1 default 1/N
+sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
-trials = 10000  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
+trials = 30*N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
 
 parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups, g: {g} \nIn-group success " \
              f"probability, qi: {qi} \nOut-group success probability, qo: {qo} \nIn-group benefit, " \
@@ -23,7 +23,7 @@ parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups,
 print(parameters)
 
 # Save to log? True = Save
-log = True
+log = False
 filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
 
 # Create log file
@@ -98,8 +98,8 @@ for tests in range(10):
                 j_pobar = pbar(j_group, j_neighbours)
 
                 # Expected fitness for i and j
-                wi = wi_func(population[i], i_pobar)
-                wj = wi_func(population[j], j_pobar)
+                wi = wi_func(i_pol, i_pobar)
+                wj = wi_func(j_pol, j_pobar)
 
                 # Probability that i will copy j strategy
                 prob = prob_function(wi, wj)
@@ -109,8 +109,9 @@ for tests in range(10):
 
                 # Check whether the absorbing state of zero polarisation or maximal polarisation has been reached
                 first = population[0]
-                if first in [0, 1] and all(flag == first for flag in population):
+                if first in [0, 1] and np.all(population == first):
                     if first == 0:
+                        #print("Howdy there!")
                         pol_flips += 1
                     break
 
@@ -134,3 +135,6 @@ if log:
 # TODO make graph vary strengh of selection vs fixation
 # TODO find a network and plug in adjacency matrix & compare to baseline
 # TODO think about varying parameters
+        
+        
+        
