@@ -4,7 +4,6 @@ import random
 import datetime
 
 # Set properties of model O(N**6) (with a connected graph):
-# Git token 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
 
 N = 100  # Population size
 g = 5  # Number of groups # TODO vary this and make graph
