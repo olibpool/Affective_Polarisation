@@ -1,21 +1,24 @@
 import copy
+
+import matplotlib.pyplot as plt
 import numpy as np
 import random
 import datetime
 
 # Set properties of model O(N**6) (with a connected graph):
 
-N = 100  # Population size
-g = 5  # Number of groups # TODO vary this and make graph
+N = 100  # Population size - default
+gmin, gmax = 2, 5  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
-qo = 0.6  # Out-group success probability -default = 0.6
+qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
-trials = 30*N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
+trials = 1000 * N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
 
-parameters = f"Model properties: \n\nPopulation size, N: {N} \nNumber of groups, g: {g} \nIn-group success " \
+parameters = f"Model properties: \n\nPopulation size, N: {N} \nMin num of groups, gmin: {gmin} \nMax num of groups, " \
+             f"gmax: {gmax} \nIn-group success " \
              f"probability, qi: {qi} \nOut-group success probability, qo: {qo} \nIn-group benefit, " \
              f"Bi {Bi} \nOut-group benefit, Bo: {Bo} \nStrength of selection, sigma: {sigma}\nPolarisation p: {p} " \
              f"\nNumber of trails, trials: {trials} \n"
@@ -39,7 +42,7 @@ if log:
 start_population = np.array([1 for i in range(N)])
 
 # Adjacency matrix
-# Configured to just create a simple connected graph for now. Also array is used for effciency purposes.
+# Configured to just create a simple connected graph for now. Also array is used for efficiency purposes.
 adj = np.array([[1 if i != j else 0 for i in range(N)] for j in range(N)])
 
 
@@ -68,7 +71,7 @@ def pbar(group, neigh):
 
 results = []
 
-for tests in range(10):
+for g in range(gmin, gmax + 1):
     pol_flips = 0  # Number of times that the population finishes with 0 polarisation
 
     for counter in range(trials):
@@ -89,7 +92,6 @@ for tests in range(10):
 
             # Only continue if the polarisations are different
             if i_pol != j_pol:
-
                 i_group = int(i * g / N)
                 i_pobar = pbar(i_group, i_neighbours)
 
@@ -111,7 +113,7 @@ for tests in range(10):
                 first = population[0]
                 if first in [0, 1] and np.all(population == first):
                     if first == 0:
-                        #print("Howdy there!")
+                        # print("Howdy there!")
                         pol_flips += 1
                     break
 
@@ -122,9 +124,7 @@ for tests in range(10):
 
     if log:
         with open(filename, "a") as f:
-            f.write(str(pol_flips / trials) + "\n")
-
-avg = sum(results) / len(results)
+            f.write(f"g= {g} " + str(pol_flips / trials) + "\n")
 
 if log:
     with open(filename, "a") as f:
@@ -132,7 +132,15 @@ if log:
         f.write(str(results))
         f.close()
 
+
+fig, ax = plt.subplots()
+ax.plot(range(gmin, gmax + 1), results)
+ax.set(title="Plot of the probability of flipping polarisation against the number of political groups present",
+       xlabel="Number of groups",
+       ylabel="Probability that the population finishes with 0 polarisation",
+       ylim=[0, max(results) + 0.01])
+plt.show()
+
 # TODO make graph vary strength of selection vs fixation
 # TODO find a network and plug in adjacency matrix & compare to baseline
 # TODO think about varying parameters
-        
