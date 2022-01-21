@@ -7,13 +7,13 @@ import datetime
 
 # Set properties of model O(N**6) (with a connected graph):
 
-N = 100  # Population size - default
+N = 120  # Population size - default = 100
 gmin, gmax = 2, 5  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
-sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
+sigma = 10 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
 trials = 1000 * N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
 
@@ -125,12 +125,6 @@ for g in range(gmin, gmax + 1):
     if log:
         with open(filename, "a") as f:
             f.write(f"g= {g} " + str(pol_flips / trials) + "\n")
-
-if log:
-    with open(filename, "a") as f:
-        f.write(f"\n The average p-val was: {avg} \n\n The results were: \n")
-        f.write(str(results))
-        f.close()
 
 
 fig, ax = plt.subplots()
