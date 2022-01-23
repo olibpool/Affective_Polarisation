@@ -5,19 +5,19 @@ import numpy as np
 import random
 import datetime
 
-# Set properties of model O(N**6) (with a connected graph):
+# Set parameters of model O(N**6) (with a connected graph):
 
-N = 120  # Population size - default = 100
-gmin, gmax = 2, 5  # Min / Max number of groups
+N = 150  # Population size - default = 100
+gmin, gmax = 2, 20  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 10 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
-trials = 1000 * N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
+trials = 1500 * N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
 
-parameters = f"Model properties: \n\nPopulation size, N: {N} \nMin num of groups, gmin: {gmin} \nMax num of groups, " \
+parameters = f"Model parameters: \n\nPopulation size, N: {N} \nMin num of groups, gmin: {gmin} \nMax num of groups, " \
              f"gmax: {gmax} \nIn-group success " \
              f"probability, qi: {qi} \nOut-group success probability, qo: {qo} \nIn-group benefit, " \
              f"Bi {Bi} \nOut-group benefit, Bo: {Bo} \nStrength of selection, sigma: {sigma}\nPolarisation p: {p} " \
@@ -120,6 +120,7 @@ for g in range(gmin, gmax + 1):
     print()
     print("The probability that zero polarisation takes over is:")
     print(pol_flips / trials)
+    print(f"For {g} groups.")
     results.append(pol_flips / trials)
 
     if log:
@@ -129,10 +130,10 @@ for g in range(gmin, gmax + 1):
 
 fig, ax = plt.subplots()
 ax.plot(range(gmin, gmax + 1), results)
-ax.set(title="Plot of the probability of flipping polarisation against the number of political groups present",
+ax.set(title=f"Population size: {N}, Trails: {trials}",
        xlabel="Number of groups",
-       ylabel="Probability that the population finishes with 0 polarisation",
-       ylim=[0, max(results) + 0.01])
+       ylabel="Probability of ending with 0 polarisation",
+       ylim=[0, max(results) * 1.1])
 plt.show()
 
 # TODO make graph vary strength of selection vs fixation
