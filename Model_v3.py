@@ -1,22 +1,20 @@
 import copy
-
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 import datetime
 
 # Set parameters of model O(N**6) (with a connected graph):
-
 N = 100  # Population size - default = 100
-gmin, gmax = 12, 20  # Min / Max number of groups
+gmin, gmax = 2, 10  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 10 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
-trials = 1500 * N  # Number of trials, keep around 10*N. Takes around N generations to reach fixation
-r = 0.99  # Probability that j is selected from the same group as i.
+trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
+r = 0.9  # Probability that j is selected from the same group as i.
 
 parameters = f"Model parameters: \n\nPopulation size, N: {N} \nMin num of groups, gmin: {gmin} \nMax num of groups, " \
              f"gmax: {gmax} \nIn-group success " \
@@ -29,6 +27,9 @@ print(parameters)
 # Save to log? True = Save
 log = False
 filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
+
+# Save Figure produced? True = Save
+figure = True
 
 # Create log file
 if log:
@@ -48,8 +49,8 @@ adj = np.array([[1 if i != j else 0 for i in range(N)] for j in range(N)])
 
 
 # Expected fitness
-def wi_func(pi, pobar):  # account for group size
-    return pi * qi * Bi + (1 - pi) * (1 - pobar) * qo * Bo
+def wi_func(group_size, pi, pobar):  # account for group size
+    return (group_size / N) * pi * qi * Bi + (1 - group_size / N) * (1 - pi) * (1 - pobar) * qo * Bo
 
 
 # Finding neighbours
@@ -75,6 +76,12 @@ results = []
 for g in range(gmin, gmax + 1):
     pol_flips = 0  # Number of times that the population finishes with 0 polarisation
 
+    group_sizes = []  # List to save the value of each group
+    groups = [int(n * g / N) for n in range(N)]
+
+    for n in range(g):
+        group_sizes.append(groups.count(n))
+
     for counter in range(trials):
         # Choose a random member of the population and flip their polarisation
         initial = random.randrange(N)
@@ -85,24 +92,44 @@ for g in range(gmin, gmax + 1):
             # Select i and calculate properties
             i = random.randrange(N)
             i_pol = population[i]
+            i_group = int(i * g / N)
             i_neighbours = neighbours(i)
 
+            # Split i neighbours into in/out groups
+            index_of_first_in_i_group = sum(group_sizes[0:i_group])
+            index_of_last = index_of_first_in_i_group + group_sizes[i_group]
+
+            in_group_neighbours = [] #change to j selection group
+            out_group_neighbours = []
+            for n in i_neighbours:
+                if index_of_first_in_i_group <= n < index_of_last:
+                    in_group_neighbours.append(n)
+                else:
+                    out_group_neighbours.append(n)
+
+            # Choose group to select j from, according to r
+            if random.random() < r:
+                j_selection_group = in_group_neighbours
+            else:
+                j_selection_group = out_group_neighbours
+
             # Select j and calculate properties
-            j = random.choice(i_neighbours)  # choose j from the same group
+            j = random.choice(j_selection_group)  # choose j from the same group
             j_pol = population[j]
 
             # Only continue if the polarisations are different
             if i_pol != j_pol:
-                i_group = int(i * g / N)
+                i_group_size = group_sizes[i_group]
                 i_pobar = pbar(i_group, i_neighbours)
 
                 j_neighbours = neighbours(j)
                 j_group = int(j * g / N)
+                j_group_size = group_sizes[j_group]
                 j_pobar = pbar(j_group, j_neighbours)
 
                 # Expected fitness for i and j
-                wi = wi_func(i_pol, i_pobar)
-                wj = wi_func(j_pol, j_pobar)
+                wi = wi_func(i_group_size, i_pol, i_pobar)
+                wj = wi_func(j_group_size, j_pol, j_pobar)
 
                 # Probability that i will copy j strategy
                 prob = prob_function(wi, wj)
@@ -134,6 +161,11 @@ ax.set(title=f"Population size: {N}, Trails: {trials}",
        xlabel="Number of groups",
        ylabel="Probability of ending with 0 polarisation",
        ylim=[0, max(results) * 1.1])
+
+if figure:
+    plt.savefig("Saved_data/Population size: " + str(N) + " Trails: " + str(trials) + "  " + str(
+        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + ".png")
+
 plt.show()
 
 # TODO make graph vary strength of selection vs fixation
