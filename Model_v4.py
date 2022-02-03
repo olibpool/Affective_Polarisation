@@ -1,4 +1,6 @@
 import copy
+import csv
+
 import matplotlib.pyplot as plt
 import numpy as np
 import random
@@ -21,7 +23,7 @@ matrix = "Aarhus"
 
 # Save to log? True = Save
 log = False
-filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
+filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".csv")
 
 # Use special matrix?
 matrix_use = False
@@ -63,11 +65,9 @@ print(parameters)
 
 # Create log file
 if log:
-    f = open(filename, "a")
-    f.write(parameters)
-    f.write("\n")
-    f.write("\nThese parameters give the following p-values: \n")
-    f.close()
+    with open(filename, 'w', newline='') as file:
+        mywriter = csv.writer(file, delimiter=',')
+        mywriter.writerow([gmin, gmax, rmin, rmax, steps])
 
 # Expected fitness
 def wi_func(group_size, pi, pobar):  # account for group size
@@ -180,9 +180,11 @@ for ri, r in enumerate(np.linspace(rmin, rmax, steps)):
         print(f"For {g} groups.")
         results[ri].append(pol_flips / trials)
 
-        if log:
-            with open(filename, "a") as f:
-                f.write(f"g= {g} " + str(pol_flips / trials) + "\n")
+    if log:
+        with open(filename, 'w', newline='') as file:
+            mywriter = csv.writer(file, delimiter=',')
+            mywriter.writerow(results[ri])
+
 
 fig, ax = plt.subplots()
 
@@ -198,7 +200,7 @@ ax.set(title=f"Colour plot of probability of fixation for N={N}, Trails={trials}
 
 if figure:
     plt.savefig("Saved_data/Population size: " + str(N) + " Trails: " + str(trials) + "  " + str(
-        datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + ".png")
+        datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + ".png")
 
 plt.show()
 
