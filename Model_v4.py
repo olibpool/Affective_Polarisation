@@ -1,12 +1,10 @@
 import copy
 import csv
-
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 import datetime
 import ast
-import itertools
 
 # Set parameters of model O(N**6) (with a connected graph):
 N = 100  # Population size - default = 100
@@ -210,3 +208,34 @@ plt.show()
 
 
 # The more groups
+
+
+# find optimal groups for r and pop
+# generate random matrices and test them
+
+# lit review:
+
+# More expansive
+# Sections are good
+# Just expand the size
+# More references
+# No objection to the style of writing
+# Don't include hand drawn diagrams
+# Need a section on what the project is about just detail what the actual project
+# Include the markov process in the moran process section
+# All i need to do demonstrate i have a grasp of markov processes
+# Use symbols in equations
+# Use symbols instead of actual numbers, e.g. m individuals
+# Write equations in general form.
+# Then can write out equations in their general form.
+# Try and keep it more general than specific.
+# Get more figures in the affective polarisation section.
+# make it known that affective polarisation is a real problem.
+# Change the ordering a bit. Cultural evolution -> Moran -> Affective Polarisation
+# Include a subsection in cultural evolution on evolutionary game theory (specifically moran process).
+# Keep it relevant evolutionary game throery -> payoff matrix -> interactions -> leads to fitness function.
+# Focusing on the fixation probability.
+# Alex is not inloved in marking the talk, will be fine to hear a practice and send draft early.
+
+#start to think in the back of my mind how to predict the optimum.
+
