@@ -7,8 +7,8 @@ import datetime
 import ast
 
 # Set parameters of model O(N**6) (with a connected graph):
-N = 100  # Population size - default = 100
-gmin, gmax = 2, 20  # Min / Max number of groups
+N = 10  # Population size - default = 100
+gmin, gmax = 2, 4  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
@@ -16,18 +16,26 @@ Bo = 2  # Out-group Benefit - default = 2
 sigma = 100 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
 trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
-rmin, rmax, steps = 0.8, 0.999, 20  # min / max / steps Probability that j is selected from the same group as i.
+rmin, rmax, steps = 0.8, 0.999, 2  # min / max / steps Probability that j is selected from the same group as i.
 matrix = "Aarhus"
+date = str(datetime.datetime.now().strftime('%Y-%m-%d_(%H-%M)'))
 
 # Save to log? True = Save
-log = False
-filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".csv")
+log = True
+filename = f"Saved_data/Logs/Date_{date}_log.csv"
+
+if log:
+    with open(filename, 'w+', newline='') as f:
+        csvwriter = csv.writer(f)
+        csvwriter.writerow(['N', 'Trials', 'rmin', 'rmax', 'steps', 'gmin', 'gmax'])
+        csvwriter.writerow([N, trials, rmin, rmax, steps, gmin, gmax])
+        csvwriter.writerow(['data'])
 
 # Use special matrix?
 matrix_use = False
 
 # Save Figure produced? True = Save
-figure = True
+figure = False
 
 # Adjacency matrix
 # Configured to just create a simple connected graph for now. Also array is used for efficiency purposes.
@@ -47,7 +55,6 @@ if matrix_use:
 else:
     adj = np.array([[1 if i != j else 0 for i in range(N)] for j in range(N)])
 
-
 # Initial population saved as an array with value 1 suggesting polarised.
 # member index: [polarisation (pi)]
 start_population = np.array([1 for i in range(N)])
@@ -61,11 +68,6 @@ parameters = f"Model parameters: \n\nPopulation size, N: {N} \nMin num of groups
 
 print(parameters)
 
-# Create log file
-if log:
-    with open(filename, 'w', newline='') as file:
-        mywriter = csv.writer(file, delimiter=',')
-        mywriter.writerow([gmin, gmax, rmin, rmax, steps])
 
 # Expected fitness
 def wi_func(group_size, pi, pobar):  # account for group size
@@ -125,7 +127,7 @@ for ri, r in enumerate(np.linspace(rmin, rmax, steps)):
                 index_of_first_in_i_group = sum(group_sizes[0:i_group])
                 index_of_last = index_of_first_in_i_group + group_sizes[i_group]
 
-                in_group_neighbours = [] #change to j selection group
+                in_group_neighbours = []  # change to j selection group
                 out_group_neighbours = []
                 for n in i_neighbours:
                     if index_of_first_in_i_group <= n < index_of_last:
@@ -143,6 +145,8 @@ for ri, r in enumerate(np.linspace(rmin, rmax, steps)):
                 if j_selection_group:
                     j = random.choice(j_selection_group)  # choose j from the same group
                     j_pol = population[j]
+                else:
+                    j_pol = -1  # Just so the if statement below doesn't pass
 
                 # Only continue if the polarisations are different
                 if i_pol != j_pol:
@@ -179,10 +183,9 @@ for ri, r in enumerate(np.linspace(rmin, rmax, steps)):
         results[ri].append(pol_flips / trials)
 
     if log:
-        with open(filename, 'w', newline='') as file:
+        with open(filename, 'a') as file:
             mywriter = csv.writer(file, delimiter=',')
             mywriter.writerow(results[ri])
-
 
 fig, ax = plt.subplots()
 
@@ -197,8 +200,7 @@ ax.set(title=f"Colour plot of probability of fixation for N={N}, Trails={trials}
        )
 
 if figure:
-    plt.savefig("Saved_data/Population size: " + str(N) + " Trails: " + str(trials) + "  " + str(
-        datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')) + ".png")
+    plt.savefig("Saved_data/New_figs/N=" + str(N) + "_Trails=" + str(trials) + "_" + date + ".png")
 
 plt.show()
 
@@ -208,7 +210,6 @@ plt.show()
 
 
 # The more groups
-
 
 # find optimal groups for r and pop
 # generate random matrices and test them
@@ -233,9 +234,8 @@ plt.show()
 # make it known that affective polarisation is a real problem.
 # Change the ordering a bit. Cultural evolution -> Moran -> Affective Polarisation
 # Include a subsection in cultural evolution on evolutionary game theory (specifically moran process).
-# Keep it relevant evolutionary game throery -> payoff matrix -> interactions -> leads to fitness function.
+# Keep it relevant evolutionary game theory -> payoff matrix -> interactions -> leads to fitness function.
 # Focusing on the fixation probability.
-# Alex is not inloved in marking the talk, will be fine to hear a practice and send draft early.
+# Alex is not involved in marking the talk, will be fine to hear a practice and send draft early.
 
-#start to think in the back of my mind how to predict the optimum.
-
+# start to think in the back of my mind how to predict the optimum.

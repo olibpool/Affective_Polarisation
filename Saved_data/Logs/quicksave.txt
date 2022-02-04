@@ -1,0 +1,516 @@
+Model parameters: 
+
+Population size, N: 100 
+Min num of groups, gmin: 2 
+Max num of groups, gmax: 20 
+In-group success probability, qi: 1 
+Out-group success probability, qo: 0.6 
+In-group benefit, Bi 1 
+Out-group benefit, Bo: 2 
+Strength of selection, sigma: 1.0
+Polarisation p: 1 
+Number of trails, trials: 10000 
+Min / max / steps of r: 0.8, 0.999, 20
+Save to log?: False
+Save figure?: True
+Use matrix?: False
+Matrix used if so: Aarhus
+
+##############################
+Val of r: 0.8
+There is 19 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0001
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0007
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.0022
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0055
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.0113
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0141
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.0215
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.0226
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0277
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0306
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.032
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0358
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0361
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.038
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0429
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.0451
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0459
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0466
+For 20 groups.
+
+##############################
+Val of r: 0.8104736842105263
+There is 18 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0008
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.003
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0072
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.0117
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0165
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.0171
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.0229
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0242
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0313
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.0295
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0346
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0356
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.0398
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0403
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.0434
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0461
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0453
+For 20 groups.
+
+##############################
+Val of r: 0.8209473684210526
+There is 17 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0006
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.0034
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0069
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.0099
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0158
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.019
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.022
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0254
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0317
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.0343
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0314
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0339
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.0397
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0385
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.0485
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0433
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0412
+For 20 groups.
+
+##############################
+Val of r: 0.831421052631579
+There is 16 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0006
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.0033
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0081
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.0122
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0174
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.0203
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.0221
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0249
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0287
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.0332
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0334
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0397
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.0395
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0389
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.0392
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0446
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0477
+For 20 groups.
+
+##############################
+Val of r: 0.8418947368421053
+There is 15 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0008
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.0028
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0053
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.011
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0138
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.0202
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.0246
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0263
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0317
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.0313
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0338
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0377
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.04
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0416
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.043
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0431
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0473
+For 20 groups.
+
+##############################
+Val of r: 0.8523684210526317
+There is 14 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.
+
+The probability that zero polarisation takes over is:
+0.0007
+For 4 groups.
+
+The probability that zero polarisation takes over is:
+0.0023
+For 5 groups.
+
+The probability that zero polarisation takes over is:
+0.0077
+For 6 groups.
+
+The probability that zero polarisation takes over is:
+0.0118
+For 7 groups.
+
+The probability that zero polarisation takes over is:
+0.0135
+For 8 groups.
+
+The probability that zero polarisation takes over is:
+0.0174
+For 9 groups.
+
+The probability that zero polarisation takes over is:
+0.023
+For 10 groups.
+
+The probability that zero polarisation takes over is:
+0.0255
+For 11 groups.
+
+The probability that zero polarisation takes over is:
+0.0295
+For 12 groups.
+
+The probability that zero polarisation takes over is:
+0.0339
+For 13 groups.
+
+The probability that zero polarisation takes over is:
+0.0331
+For 14 groups.
+
+The probability that zero polarisation takes over is:
+0.0376
+For 15 groups.
+
+The probability that zero polarisation takes over is:
+0.0432
+For 16 groups.
+
+The probability that zero polarisation takes over is:
+0.0415
+For 17 groups.
+
+The probability that zero polarisation takes over is:
+0.0403
+For 18 groups.
+
+The probability that zero polarisation takes over is:
+0.0418
+For 19 groups.
+
+The probability that zero polarisation takes over is:
+0.0451
+For 20 groups.
+
+##############################
+Val of r: 0.862842105263158
+There is 13 steps to go after this.
+
+
+The probability that zero polarisation takes over is:
+0.0
+For 2 groups.
+
+The probability that zero polarisation takes over is:
+0.0
+For 3 groups.

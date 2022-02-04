@@ -153,7 +153,7 @@ if figure:
         datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + ".png")
 
 if csvsave:
-    f = open("Saved_data/model_v4.csv")
+    f = open("../Saved_data/Logs/model_v4.csv")
 
     writer = csv.writer(f)
 
