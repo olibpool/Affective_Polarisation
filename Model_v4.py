@@ -5,10 +5,11 @@ import numpy as np
 import random
 import datetime
 import ast
+import os
 
 # Set parameters of model O(N**6) (with a connected graph):
-N = 10  # Population size - default = 100
-gmin, gmax = 2, 4  # Min / Max number of groups
+N = 100  # Population size - default = 100
+gmin, gmax = 2, 15  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
@@ -16,12 +17,13 @@ Bo = 2  # Out-group Benefit - default = 2
 sigma = 100 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
 trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
-rmin, rmax, steps = 0.8, 0.999, 2  # min / max / steps Probability that j is selected from the same group as i.
+rmin, rmax, steps = 0.95, 0.999, 10  # min / max / steps Probability that j is selected from the same group as i.
 matrix = "Aarhus"
 date = str(datetime.datetime.now().strftime('%Y-%m-%d_(%H-%M)'))
 
 # Save to log? True = Save
 log = True
+curr_dir = os.getcwdb()
 filename = f"Saved_data/Logs/Date_{date}_log.csv"
 
 if log:
@@ -35,7 +37,7 @@ if log:
 matrix_use = False
 
 # Save Figure produced? True = Save
-figure = False
+figure = True
 
 # Adjacency matrix
 # Configured to just create a simple connected graph for now. Also array is used for efficiency purposes.

@@ -1,0 +1,3 @@
+N,Trials,rmin,rmax,steps,gmin,gmax
+100,10000,0.95,0.999,10,2,15
+data
