@@ -1,0 +1,4 @@
+N,Trials,pmin,pmax,step,g
+100,10000,0.05,0.999,0.05,2
+data
+0.0054
