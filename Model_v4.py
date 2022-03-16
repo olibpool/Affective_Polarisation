@@ -148,7 +148,7 @@ for ri, r in enumerate(np.linspace(rmin, rmax, steps)):
                     j = random.choice(j_selection_group)  # choose j from the same group
                     j_pol = population[j]
                 else:
-                    j_pol = -1  # Just so the if statement below doesn't pass
+                    j_pol = i_pol  # Just so the if statement below doesn't pass
 
                 # Only continue if the polarisations are different
                 if i_pol != j_pol:

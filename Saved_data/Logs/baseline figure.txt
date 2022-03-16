@@ -1,0 +1,15 @@
+Model parameters:
+Population size, N: 100
+Min num of groups, gmin: 2
+Max num of groups, gmax: 2
+In-group success probability, qi: 1
+Out-group success probability, qo: 0.6
+In-group benefit, Bi 1
+Out-group benefit, Bo: 2
+Strength of selection, sigma: 0.01
+Polarisation p: 1
+Number of trails, trials: 10000
+
+The probability that zero polarisation takes over is:
+0.0056
+For 2 groups.
