@@ -1,5 +1,4 @@
 import copy
-import csv
 from itertools import combinations, groupby
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -10,6 +9,8 @@ import ast
 import os
 
 # Set parameters of model O(N**6) (with a connected graph):
+import pandas as pd
+
 N = 100  # Population size - default = 100
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
@@ -17,8 +18,8 @@ Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
 pol = 1  # Polarisation
-trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
-pmin, pmax, step = 0.01, 0.1, 0.01  # min / max / step of p used in generating the random graph (prob of edge between nodes).
+trials = 1000 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
+pmin, pmax, step = 0.2, 0.301, 0.01  # min / max / step of p used in generating the random graph (prob of edge between nodes).
 r = 0.9  # Probability that j is from the same group as i.
 g = 2 # Number of groups.
 matrix = "Aarhus"
@@ -28,13 +29,6 @@ date = str(datetime.datetime.now().strftime('%Y-%m-%d_(%H-%M)'))
 log = True
 curr_dir = os.getcwdb()
 filename = f"Saved_data/Logs/Date_{date}_log.csv"
-
-if log:
-    with open(filename, 'w+', newline='') as f:
-        csvwriter = csv.writer(f)
-        csvwriter.writerow(['N', 'Trials', 'pmin', 'pmax', 'step', 'g'])
-        csvwriter.writerow([N, trials, pmin, pmax, step, g])
-        csvwriter.writerow(['data'])
 
 # Use special matrix?
 matrix_use = False
@@ -102,8 +96,8 @@ def pbar(group, neigh):
 # https://stackoverflow.com/questions/61958360/how-to-create-random-graph-where-each-node-has-at-least-1-edge-using-networkx
 def gnp_random_connected_graph(n, p):
     """
-    Generates a random undirected graph, similarly to an Erdős-Rényi
-    graph, but enforcing that the resulting graph is conneted
+    Generates a random undirected graph, similarly to an Erdos-Renyi
+    graph, but enforcing that the resulting graph is connected
     """
     edges = combinations(range(n), 2)
     G = nx.Graph()
@@ -143,7 +137,7 @@ for pi, p in enumerate(np.arange(pmin, pmax, step)):
         group_sizes.append(groups.count(n))
 
     for counter in range(trials):
-        # Create a random connected graph's adajcency matrix.
+        # Create a random connected graph's adjacency matrix.
         adj = gnp_random_connected_graph(N, p)
 
         # Choose a random member of the population and flip their polarisation
@@ -218,9 +212,18 @@ for pi, p in enumerate(np.arange(pmin, pmax, step)):
     results[pi].append(pol_flips / trials)
 
 if log:
-    with open(filename, 'a') as file:
-        mywriter = csv.writer(file, delimiter=',')
-        mywriter.writerow(results[pi])
+    df_dict = {'prob': np.arange(pmin, pmax, step),
+              'fix': results}
+
+    df = pd.DataFrame(df_dict)
+
+    df.to_csv(filename)
+
+    params = [N, sigma, trials, pmin, pmax, step, r, g]
+
+    with open(filename + "params.txt") as f:
+        f.write("[N, sigma, trials, pmin, pmax, step, r, g]")
+        f.write(str(params))
 
 fig, ax = plt.subplots()
 
