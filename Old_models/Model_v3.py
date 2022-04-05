@@ -1,12 +1,16 @@
 import copy
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 import datetime
 
 # Set parameters of model O(N**6) (with a connected graph):
+import pandas as pd
+
 N = 100  # Population size - default = 100
-gmin, gmax = 2, 2  # Min / Max number of groups
+gmin, gmax = 2, 15  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
 Bi = 1  # In-group benefit - default = 1
@@ -15,6 +19,7 @@ sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
 trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
 r = 0.9  # Probability that j is selected from the same group as i.
+date = str(datetime.datetime.now().strftime('%Y-%m-%d_(%H-%M)'))
 
 parameters = f"Model parameters: \n\nPopulation size, N: {N} \nMin num of groups, gmin: {gmin} \nMax num of groups, " \
              f"gmax: {gmax} \nIn-group success " \
@@ -25,19 +30,12 @@ parameters = f"Model parameters: \n\nPopulation size, N: {N} \nMin num of groups
 print(parameters)
 
 # Save to log? True = Save
-log = False
-filename = "Logs/Model " + str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ".log")
+log = True
+curr_dir = os.getcwdb()
+filename = f"Saved_data/Logs/Date_{date}_log.csv"
 
 # Save Figure produced? True = Save
 figure = True
-
-# Create log file
-if log:
-    f = open(filename, "a")
-    f.write(parameters)
-    f.write("\n")
-    f.write("\nThese parameters give the following p-values: \n")
-    f.close()
 
 # Initial population saved as an drray with value 1 suggesting polarised.
 # member index: [polarisation (pi)]
@@ -151,9 +149,19 @@ for g in range(gmin, gmax + 1):
     print(f"For {g} groups.")
     results.append(pol_flips / trials)
 
-    if log:
-        with open(filename, "a") as f:
-            f.write(f"g= {g} " + str(pol_flips / trials) + "\n")
+if log:
+    df_dict = {'prob': range(gmin, gmax+1),
+               'fix': results}
+
+    df = pd.DataFrame(df_dict)
+
+    df.to_csv(filename)
+
+    params = [N, sigma, trials, gmin, gmax, g]
+
+    with open(filename + "params.txt") as f:
+        f.write("[N, sigma, trials, rmin, rmax, steps, g]")
+        f.write(str(params))
 
 fig, ax = plt.subplots()
 ax.plot(range(gmin, gmax + 1), results)
@@ -163,7 +171,7 @@ ax.set(title=f"Population size: {N}, Trails: {trials}",
        ylim=[0, max(results) * 1.1])
 
 if figure:
-    plt.savefig("Saved_data/Population size: " + str(N) + " Trails: " + str(trials) + "  " + str(
+    plt.savefig("Saved_data/New_figs/Population size_" + str(N) + " Trails_" + str(trials) + "_" + str(
         datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + ".png")
 
 plt.show()
