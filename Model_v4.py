@@ -10,7 +10,7 @@ import os
 # Set parameters of model O(N**6) (with a connected graph):
 import pandas as pd
 
-N = 200  # Population size - default = 100
+N = 100  # Population size - default = 100
 gmin, gmax = 2, 15  # Min / Max number of groups
 qi = 1  # In-group success probability - default = 1
 qo = 0.6  # Out-group success probability - default = 0.6
@@ -18,7 +18,7 @@ Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 100 / N  # To keep N*sigma ~  1 default 1 / N
 p = 1  # Polarisation
-trials = 100000  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
+trials = 100*N  # Number of trials, keep min around 100*N. Takes around N generations to reach fixation
 rmin, rmax, steps = 0.9, 0.9, 1  # min / max / steps Probability that j is selected from the same group as i.
 matrix = "Aarhus"
 date = str(datetime.datetime.now().strftime('%Y-%m-%d_(%H-%M)'))

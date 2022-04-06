@@ -18,7 +18,7 @@ Bi = 1  # In-group benefit - default = 1
 Bo = 2  # Out-group Benefit - default = 2
 sigma = 1 / N  # To keep N*sigma ~  1 default 1 / N
 pol = 1  # Polarisation
-trials = 1000 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
+trials = 100 * N  # Number of trials, keep min around 10*N. Takes around N generations to reach fixation
 pmin, pmax, step = 0.99, 0.991, 0.1  # min / max / step of p used in generating the random graph (prob of edge between nodes).
 r = 0.9  # Probability that j is from the same group as i.
 g = 2 # Number of groups.
